@@ -1,11 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma/prisma.service';
 import { PaymentStatus } from '.prisma/client/payments'
 import { PaymentDto } from './payment.dto';
+import { lastValueFrom } from 'rxjs';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class PaymentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    
+    @Inject('PAYMENTS_SERVICE')
+    private kafka: ClientKafka  
+  ) { }
 
   all() {
     return this.prisma.payment.findMany()
@@ -18,7 +25,7 @@ export class PaymentsService {
         status: PaymentStatus.APPROVED
       }
     })
-
-    return createdPayment
+    await lastValueFrom(this.kafka.emit('payments', createdPayment));
+    return createdPayment;
   }
 }

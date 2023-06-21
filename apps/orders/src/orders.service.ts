@@ -26,8 +26,15 @@ export class OrdersService {
       }
     })
 
-    await lastValueFrom(this.kafka.emit('order_created', createdOrder))
+    await lastValueFrom(this.kafka.emit('orders', createdOrder))
 
     return createdOrder
+  }
+
+  complete(id: string, status: OrderStatus) {
+    return this.prisma.order.update({
+      where: { id },
+      data: { status },
+    });
   }
 }

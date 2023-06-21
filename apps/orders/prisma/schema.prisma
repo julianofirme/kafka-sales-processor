@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../../../node_modules/.prisma/client/orders"
+  output   = "../../../node_modules/.prisma/client/orders"
 }
 
 datasource db {
@@ -12,12 +12,12 @@ datasource db {
 }
 
 model Order {
-  id        String   @id @unique @default(uuid())
-  price     Int
+  id        String      @id @unique @default(uuid())
+  price     Float
   clientId  String
-  status OrderStatus
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status    OrderStatus
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 enum OrderStatus {

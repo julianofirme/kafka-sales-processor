@@ -22,8 +22,10 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/microservices": "^10.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.16.0",
+    "kafkajs": "^2.2.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
